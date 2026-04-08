@@ -13,6 +13,13 @@ interface HumanizeResult {
   improvements_summary: string[];
 }
 
+interface Stats {
+  charsProcessed: number;
+  requestCount: number;
+  dailyUsers: number;
+  githubStars: number;
+}
+
 const WRITO_PROMPT = `
 \ud83d\udcaa SYSTEM ROLE
 You are WRITO \u2014 an elite human writing engine. 
@@ -50,7 +57,7 @@ function App() {
   const [humanizedText, setHumanizedText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<HumanizeResult | null>(null);
-  const [stats, setStats] = useState(() => {
+  const [stats, setStats] = useState<Stats>(() => {
     const saved = localStorage.getItem('writo_stats');
     return saved ? JSON.parse(saved) : {
       charsProcessed: 2170,
@@ -77,12 +84,12 @@ function App() {
     const today = new Date().toDateString();
     const lastVisit = localStorage.getItem('writo_last_visit');
     if (lastVisit !== today) {
-      setStats(prev => ({ ...prev, dailyUsers: prev.dailyUsers + 1 }));
+      setStats((prev: Stats) => ({ ...prev, dailyUsers: prev.dailyUsers + 1 }));
       localStorage.setItem('writo_last_visit', today);
     }
 
     const interval = setInterval(() => {
-      setStats(prev => ({
+      setStats((prev: Stats) => ({
         ...prev,
         dailyUsers: prev.dailyUsers + (Math.random() > 0.95 ? 1 : 0)
       }));
@@ -153,7 +160,7 @@ function App() {
         const parsed = JSON.parse(cleaned);
         setResult(parsed);
         setHumanizedText(parsed.humanized_text);
-        setStats(prev => ({
+        setStats((prev: Stats) => ({
           ...prev,
           charsProcessed: prev.charsProcessed + inputText.length,
           requestCount: prev.requestCount + 1
