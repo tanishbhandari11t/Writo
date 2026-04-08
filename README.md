@@ -45,25 +45,14 @@
 
 ## ⚙️ Project Setup
 
-### 1. Prerequisites
-- Node.js (v18+)
-- API keys for [Google Gemini](https://aistudio.google.com/) and [Groq](https://console.groq.com/).
-
-### 2. Installation
+### 1. Installation
 ```bash
 git clone https://github.com/tanishbhandari11t/Writo.git
 cd Writo
 npm install
 ```
 
-### 3. Environment Configuration
-Create a `.env` file in the root directory:
-```env
-VITE_GEMINI_API_KEY=your_gemini_key
-VITE_GROQ_API_KEY=your_groq_key
-```
-
-### 4. Run Development Server
+### 2. Run Development Server
 ```bash
 npm run dev
 ```
